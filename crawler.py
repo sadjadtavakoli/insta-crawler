@@ -25,7 +25,7 @@ next_page_url_variables = {'id': {},
                            'after': {}}
 post_base_url = "https://www.instagram.com/p/{}/?__a=1"
 post_pure_url = "https://www.instagram.com/p/{}/"
-
+TIME_LIMIT = 4
 
 def get_user_post(shortcode):
     sleep(1)
@@ -59,7 +59,7 @@ def get_user_post(shortcode):
         post_json['store_name'] = content['owner']['username']
         post_json['read'] = False
         return post_json, insta_date < datetime.datetime.now() - datetime.timedelta(
-            days=4)
+            days=TIME_LIMIT)
 
     except:
         f = open('log.txt', "w+", encoding="utf-8")
@@ -144,7 +144,8 @@ def save(data):
 
 if __name__ == "__main__":
     rdb = r.RethinkDB()
-#   connecting to reThinkDb, for data writing. if u are using another ways for wrinting data, this part is unnecessary. 
+#   connecting to reThinkDb, for data writing and reading. if u are using another ways for wrinting and reading data,
+#   this part is unnecessary. 
     rdb.connect('localhost', 28015).repl()
 
     username_list = []
